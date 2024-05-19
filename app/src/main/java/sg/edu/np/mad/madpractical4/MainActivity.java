@@ -3,6 +3,7 @@ package sg.edu.np.mad.madpractical4;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvName = findViewById(R.id.textView4);
         TextView tvDescription = findViewById(R.id.textView3);
         Button btnFollow = findViewById(R.id.button2);
-        Button btnMessage = findViewById(R.id.button); // Assuming the ID of the "Message" button is button
+        Button btnMessage = findViewById(R.id.button);
 
         // Set the text view with the user's name, description, and default button message
         tvName.setText(user.name + " " + randomNumber);
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
             // Display the Toast message
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+            // Log a message to verify if the OnClickListener is triggered
+            Log.d("MainActivity", "Follow button clicked. Message: " + message);
         });
+
     }
 }

@@ -1,5 +1,6 @@
 package sg.edu.np.mad.madpractical4;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,61 +35,27 @@ public class ListActivity extends AppCompatActivity {
 
         ArrayList<User> myUserList = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             int name = new Random().nextInt(99999999);
             int description = new Random().nextInt(99999999);
             boolean followed = new Random().nextBoolean();
 
-            User user = new User("John Doe","MAD",1, false);
-            user.setName("Name"+String.valueOf(name));
-            user.setDescription("Description"+String.valueOf(description));
+            User user = new User("John Doe", "MAD", 1, false);
+            user.setName("Name" + String.valueOf(name));
+            user.setDescription("Description" + String.valueOf(description));
             user.setFollowed(followed);
             boolean add = myUserList.add(user);
 
         }
 
-        ImageView imageView = findViewById(R.id.imageView);
+        // recyclerview
+        UserAdapter userAdapter= new UserAdapter(myUserList, this);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(userAdapter);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showAlertDialog();
-            }
-        });
     }
-
-    private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Profile");
-        builder.setMessage("MADness");
-
-        builder.setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.setPositiveButton("VIEW", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Generate a random integer
-                int randomNumber = generateRandomNumber();
-
-                // Launch MainActivity and pass the random number
-                Intent intent = new Intent(ListActivity.this, MainActivity.class);
-                intent.putExtra("RANDOM_NUMBER", randomNumber);
-                startActivity(intent);
-
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private int generateRandomNumber() {
-        Random random = new Random();
-        return random.nextInt(100000);
-    }
-
-    // create a list of 20 random users
-
 }
+
