@@ -35,7 +35,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         holder.nameTextView.setText(user.getName());
         holder.descriptionTextView.setText(user.getDescription());
         holder.smallImageView.setImageResource(R.mipmap.ic_launcher_round);
-        holder.followButton.setText(user.isFollowed() ? "Unfollow" : "Follow");
+        holder.followButton.setText(user.getFollowed() ? "Unfollow" : "Follow");
 
         // Check if the last digit of the user's name is 7
         if (user.getName().endsWith("7")) {
@@ -47,9 +47,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         holder.followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.setFollowed(!user.isFollowed());
-                holder.followButton.setText(user.isFollowed() ? "Unfollow" : "Follow");
-                String message = user.isFollowed() ? "Followed" : "Unfollowed";
+                user.setFollowed(!user.getFollowed());
+                holder.followButton.setText(user.getFollowed() ? "Unfollow" : "Follow");
+                String message = user.getFollowed() ? "Followed" : "Unfollowed";
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         });
